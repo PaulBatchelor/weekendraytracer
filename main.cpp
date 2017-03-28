@@ -1,10 +1,7 @@
 #include <iostream>
 #include "ray.h"
 
-static int g_j = 0;
-static int g_i = 0;
-
-bool hit_sphere(const vec3& center, float radius, const ray& r) {
+float hit_sphere(const vec3& center, float radius, const ray& r) {
     vec3 oc = r.origin() - center;
     float a = dot(r.direction(), r.direction());
     float b = 2.0 * dot(oc, r.direction());
@@ -20,9 +17,6 @@ bool hit_sphere(const vec3& center, float radius, const ray& r) {
 }
 
 vec3 color(const ray& r) {
-    if(g_j == 50 && g_i == 100) {
-        std::cerr << "We are here!\n";
-    }
     float t = hit_sphere(vec3(0, 0, -1), 0.5, r);
     if(t > 0.0) {
         vec3 N = unit_vector(r.point_at_parameter(t) - vec3(0, 0, -1));
@@ -43,12 +37,10 @@ int main()
     vec3 lower_left_corner(-2.0, -1.0, -1.0);
     vec3 horizontal(4.0, 0.0, 0.0);
     vec3 vertical(0.0, 2.0, 0.0);
-    vec3 origin(0.0, 0.0, 0.0001);
+    vec3 origin(0.0, 0.0, 0.0);
 
     for(int j = ny - 1; j >=0; j--) {
         for(int i = 0; i < nx; i++) {
-            g_j = j;
-            g_i = i;
             float u = float(i) / float(nx);
             float v = float(j) / float(ny);
             ray r(origin, lower_left_corner + u*horizontal + v*vertical);
