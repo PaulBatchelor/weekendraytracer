@@ -1,9 +1,11 @@
 .PHONY: render
 
+CFLAGS = -g 
+
 OBJ = main.o
 
 %.o: %.cpp
-	$(CXX) -c $< -o $@
+	$(CXX) $(CFLAGS) -c $< -o $@
 
 default: weekend
 
